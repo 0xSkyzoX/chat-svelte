@@ -12,12 +12,12 @@
      onMount(async () => {
           const _messages = await client.message.get()
           console.log(..._messages)
-          messages.update((prev) => [...prev, ..._messages])
+          messages.update((prev) => [ ..._messages,...prev])
      })
 
      client.event.listen('Message', (message) => {
           console.log(message)
-          messages.update((prev) => [...prev , message])
+          messages.update((prev) => [ message, ...prev ])
      })
 
      const submitHandle = (e) => {
@@ -29,47 +29,53 @@
      
 </script>
 
-<div class="messages-container">
-     {#each $messages as message }
-<div>
-     <h1>{message.content}</h1>
-     <small>{message.createdAt}</small>
-</div>
-{/each}
-</div>
-
-<form on:submit={submitHandle}>
-     <div class="input-container">
-          <input           
-               style="display: inline-flex;"
-               placeholder="Write a Message"
-               bind:value
-               on:input={(e) => {
-                    value = e.target.value;
-               }}
-          /><button type="submit" style="display: inline-flex; width: 5%;"
-               >Send</button
-          >
+<div class="main-container">
+     <div class="messages-container">
+          {#each $messages as message }
+     <div>
+          <h1>{message.content}</h1>
+          <small>{message.createdAt}</small>
      </div>
-</form>
+     {/each}
+     </div>
+     
+     <form on:submit={submitHandle}>
+          <div class="input-container">
+               <input           
+                    style="display: inline-flex;"
+                    placeholder="Write a Message"
+                    bind:value
+                    on:input={(e) => {
+                         value = e.target.value;
+                    }}
+               /><button type="submit" style="display: inline-flex; width: 5%;"
+                    >Send</button
+               >
+          </div>
+     </form>
+</div>
 
 <style>
      :global(h1, h2, h3, h4, h5, h6, p) {
           margin: 0;
           padding: 0;
      }
+     .main-container {
+          display: flex;
+          flex-direction: column-reverse;
+     
+     }
      .input-container {
-          position: fixed;
-          bottom: 0;
           width: 100%;
           margin: 0;
-          left: 0;
+          z-index: 100;
      }
      .input-container > input {
           width: 95%;
           margin: 0;
           padding: 10px 14px;
           font-size: 20px;
+          
      }
      .input-container > input:focus {
           outline: 0;
@@ -78,5 +84,6 @@
      }
      .messages-container {
           margin-bottom: 5rem;
+          z-index: 50;
      }
 </style>
