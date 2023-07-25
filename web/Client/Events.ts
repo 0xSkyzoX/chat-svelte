@@ -1,3 +1,4 @@
+import { Constants } from "./Constants";
 import { EventTypes } from "./datatypes";
 
 export default class Events {
@@ -8,7 +9,7 @@ export default class Events {
      
      public async listen(Event: EventTypes, fn: (params: any) => void) {
           try {
-               const socket = new WebSocket("ws://192.168.8.119:4040")
+               const socket = new WebSocket(Constants.GATEWAY)
 
                socket.addEventListener('open', (ws) => {
                     console.log("WebSocket Connected")
@@ -20,5 +21,4 @@ export default class Events {
                console.log(err)
           }
      }
-
 }

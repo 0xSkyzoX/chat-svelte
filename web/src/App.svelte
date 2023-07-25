@@ -18,6 +18,9 @@
      client.event.listen('Message', (message) => {
           console.log(message)
           messages.update((prev) => [ message, ...prev ])
+          if (message.content === 'Hello') {
+               client.message.send({content: 'Hey', createdAt: date})
+          }
      })
 
      const submitHandle = (e) => {
@@ -28,6 +31,10 @@
      };
      
 </script>
+
+{#if window.location.origin.split('http://')[1].split(".")[0] === "dashboard"}
+     <div>Hello World</div>
+{/if}
 
 <div class="main-container">
      <div class="messages-container">

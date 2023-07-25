@@ -9,13 +9,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const Constants_1 = require("./Constants");
 class Events {
     constructor() {
     }
     listen(Event, fn) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const socket = new WebSocket("ws://192.168.8.119:4040");
+                const socket = new WebSocket(Constants_1.Constants.GATEWAY);
                 socket.addEventListener('open', (ws) => {
                     console.log("WebSocket Connected");
                 });
